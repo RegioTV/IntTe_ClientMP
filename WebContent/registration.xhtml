@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chat Registration</title>
+<link rel="stylesheet" href="resources/jquery.mobile-1.2.0.min.css" />
+<link rel="stylesheet" href="resources/theme.css" />
+<script src="resources/jquery.min.js"></script>
+<script src="resources/jquery.mobile-1.2.0.js"></script>
+<script src="resources/registration.js"></script>
+</head>
+<body>
+	<!-- Chat -->
+	<div data-role="page" data-theme="a" id="page1">
+		<div id="header" data-theme="a" data-role="header">
+			<h3>Chat</h3>
+		</div>
+		<div data-role="content">
+			<h2 id="heading">Registrierung</h2>
+			<h:form id="registrationForm">
+				<div data-role="fieldcontain">
+					<fieldset data-role="controlgroup">
+						<label for="username"> Benutzername </label> <input
+							name="username" id="username" placeholder=""
+							value="#{registrationController.username}" type="text" />
+					</fieldset>
+				</div>
+				<div data-role="fieldcontain">
+					<fieldset data-role="controlgroup">
+						<label for="password"> Passwort </label> <input name="password"
+							id="password" placeholder=""
+							value="#{registrationController.password}" type="password" />
+					</fieldset>
+				</div>
+				<p:commandButton data-theme="a" id="register" value="Senden"
+					action="#{registrationController.register}" />
+			</h:form>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>#{messages['chat.title']} #{roomController.room.name}</title>
+	<h:outputStylesheet name="styles.css" />
+	<script type="text/javascript">
+		function handleMessage(message) {
+			$('#chat\\:output-area_list').append($('<li/>').text(message));
+		}
+	</script>
+</h:head>
+<h:body>
+
+	<h:form id="chat">
+		<p:growl id="growl" showDetail="true" autoUpdate="false" sticky="true" />
+
+
+
+		<p:panel header="#{roomController.room.name}" styleClass="contentPanel">
+			<p:scrollPanel id="user-list" styleClass="user-list" scrollMode="native">
+				<p:dataList value="#{roomController.room.users}" var="user" itemType="circle">  
+								#{user.username}
+							</p:dataList>
+			</p:scrollPanel>
+			<p:poll interval="3" update="user-list" />
+
+			<p:scrollPanel id="output" scrollMode="native" styleClass="output-panel">
+				<p:dataList id="output-area" itemType="circle" />
+			</p:scrollPanel>
+		</p:panel>
+
+
+
+		<p:panel styleClass="contentPanel input">
+			<p:inputTextarea id="input-area" value="#{roomController.message}" styleClass="input-area" />
+			<br />
+			<p:commandButton id="send-button" value="#{messages['chat.send']}" actionListener="#{roomController.sendMessage}" update="input-area" />
+		</p:panel>
+
+		<p:panel styleClass="contentPanel">
+			<p:commandLink id="logout-link" action="#{roomController.logout}" ajax="false">#{messages['chat.logout']}</p:commandLink>
+		</p:panel>
+	</h:form>
+
+	<p:socket onMessage="handleMessage" channel="/#{roomController.room.name}"></p:socket>
+
+</h:body>
+</html>
+
+
+
