@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:f="http://java.sun.com/jsf/core">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -24,22 +23,24 @@
 			<h:form id="registrationForm">
 				<div data-role="fieldcontain">
 					<fieldset data-role="controlgroup">
-						<label for="username"> Benutzername </label> <input
-							name="username" id="username" placeholder=""
-							value="#{registrationController.username}" type="text" />
+						<h:outputLabel for="username"> Benutzername </h:outputLabel>
+						<h:inputText id="username" placeholder=""
+							value="#{registrationController.username}" />
 					</fieldset>
 				</div>
 				<div data-role="fieldcontain">
 					<fieldset data-role="controlgroup">
-						<label for="password"> Passwort </label> <input name="password"
-							id="password" placeholder=""
-							value="#{registrationController.password}" type="password" />
+						<h:outputLabel for="password"> Passwort </h:outputLabel>
+						<h:inputSecret id="password" placeholder=""
+							value="#{registrationController.password}" />
 					</fieldset>
 				</div>
-				<p:commandButton data-theme="a" id="register" value="Senden"
-					action="#{registrationController.register}" />
+				<h:commandButton value="Senden"
+					action="#{registrationController.register}" id="register"
+					data-theme="a" />
 			</h:form>
 		</div>
+		<h:messages />
 	</div>
 </body>
 </html>
