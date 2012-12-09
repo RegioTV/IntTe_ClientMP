@@ -30,7 +30,8 @@ public class RegistrationController implements Serializable {
 			checkPassword(password);
 
 			UserService.getInstance().persist(new User(username, password));
-			ChatSession.getInstance().addMessage(SEVERITY_INFO, "registration.success", "registration.success_detail");
+			ChatSession.getInstance().addMessage(SEVERITY_INFO,
+					"registration.success", "registration.success_detail");
 
 			return "login.xhtml";
 		} catch (ValidatorException exception) {
@@ -39,7 +40,8 @@ public class RegistrationController implements Serializable {
 		}
 	}
 
-	public void checkUsername(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+	public void checkUsername(FacesContext context, UIComponent component,
+			Object value) throws ValidatorException {
 		checkUsername((String) value);
 	}
 
@@ -52,7 +54,8 @@ public class RegistrationController implements Serializable {
 			throw createValidatorException("username.error", "username.exists");
 	}
 
-	public void checkPassword(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+	public void checkPassword(FacesContext context, UIComponent component,
+			Object value) throws ValidatorException {
 		checkPassword((String) value);
 	}
 
@@ -63,8 +66,10 @@ public class RegistrationController implements Serializable {
 			throw createValidatorException("password.error", "password.short");
 	}
 
-	private ValidatorException createValidatorException(String summaryCode, String detailCode) {
-		return new ValidatorException(ChatSession.getInstance().createMessage(SEVERITY_ERROR, summaryCode, detailCode));
+	private ValidatorException createValidatorException(String summaryCode,
+			String detailCode) {
+		return new ValidatorException(ChatSession.getInstance().createMessage(
+				SEVERITY_ERROR, summaryCode, detailCode));
 	}
 
 	public String getUsername() {

@@ -915,3 +915,10 @@ a.ui-link-inherit {
 .ui-field-contain input.ui-input-text, .ui-field-contain textarea.ui-input-text, .ui-field-contain .ui-input-search {
 	width: 100%;
 }
+
+.error {
+	color: #9a134e;
+	list-style: none;
+	padding: 0;
+	text-shadow: 0 /*{shadow-x}*/ 1px /*{shadow-y}*/ 0 /*{shadow-radius}*/ #ed1e79 /*{shadow-color}*/;
+}
