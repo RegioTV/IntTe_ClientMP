@@ -1,55 +1,74 @@
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
 	<title>#{messages['chat.title']} #{roomController.room.name}</title>
-	<h:outputStylesheet name="styles.css" />
+
+	<link rel="stylesheet" href="resources/jquery.mobile-1.2.0.css" />
+	<link rel="stylesheet" href="resources/theme.css" />
+
+	<script src="resources/jquery.mobile-1.2.0.min.js"></script>
+	<script src="resources/project.js"></script>
+
 	<script type="text/javascript">
+		$(document).ready(function() {
+
+			$('#chat\\:send-button').click(function() {
+				$('#chat\\:input').val('');
+			});
+
+		});
+
 		function handleMessage(message) {
-			$('#chat\\:output-area_list').append($('<li/>').text(message));
+			$('#output').append(message + "\n");
+			$('#output').trigger('keyup');
 		}
 	</script>
+
 </h:head>
 <h:body>
 
-	<h:form id="chat">
-		<p:growl id="growl" showDetail="true" autoUpdate="false" sticky="true" />
+	<div data-role="page" data-theme="a" id="login">
+		<div id="header" data-theme="a" data-role="header">
+			<h3>Chat</h3>
+		</div>
+		<div data-role="content">
+			<h2 id="heading">#{messages['chat.title']} #{roomController.room.name}</h2>
+			<h:messages showDetail="true" class="error" />
 
+			<div data-role="collapsible" data-theme="a">
+				<h2>#{messages['chat.users']}</h2>
+				<div>
+					<ul data-role="listview" id="user-list">
+						<c:forEach var="user" items="#{roomController.room.users}">
+							<li>#{user.username}</li>
+						</c:forEach>
+					</ul>
+				</div>
+			</div>
 
+			<h:form id="chat">
+				<div>
+					<textarea id="output" readonly="readonly" />
+				</div>
 
-		<p:panel header="#{roomController.room.name}" styleClass="contentPanel">
-			<p:scrollPanel id="user-list" styleClass="user-list" scrollMode="native">
-				<p:dataList value="#{roomController.room.users}" var="user" itemType="circle">  
-								#{user.username}
-							</p:dataList>
-			</p:scrollPanel>
-			<p:poll interval="3" update="user-list" />
+				<div>
+					<h:inputTextarea id="input" value="#{roomController.message}" />
+					<p:commandButton id="send-button" value="#{messages['chat.send']}" actionListener="#{roomController.sendMessage}" />
+					<p:commandLink id="logout-link" action="#{roomController.logout}" ajax="false">#{messages['chat.logout']}</p:commandLink>
 
-			<p:scrollPanel id="output" scrollMode="native" styleClass="output-panel">
-				<p:dataList id="output-area" itemType="circle" />
-			</p:scrollPanel>
-		</p:panel>
+					<p:socket onMessage="handleMessage" channel="/#{roomController.room.name}"></p:socket>
+				</div>
 
-
-
-		<p:panel styleClass="contentPanel input">
-			<p:inputTextarea id="input-area" value="#{roomController.message}" styleClass="input-area" />
-			<br />
-			<p:commandButton id="send-button" value="#{messages['chat.send']}" actionListener="#{roomController.sendMessage}" update="input-area" />
-		</p:panel>
-
-		<p:panel styleClass="contentPanel">
-			<p:commandLink id="logout-link" action="#{roomController.logout}" ajax="false">#{messages['chat.logout']}</p:commandLink>
-		</p:panel>
-	</h:form>
-
-	<p:socket onMessage="handleMessage" channel="/#{roomController.room.name}"></p:socket>
+			</h:form>
+		</div>
+	</div>
 
 </h:body>
 </html>
-
 
 
