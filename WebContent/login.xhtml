@@ -2,16 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Chat Login</title>
-<link rel="stylesheet" href="resources/jquery.mobile-1.2.0.css" />
-<link rel="stylesheet" href="resources/theme.css" />
-<script src="resources/jquery.min.js"></script>
-<script src="resources/jquery.mobile-1.2.0.min.js"></script>
-<script src="resources/login.js"></script>
-</head>
+<h:head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Chat Login</title>
+	<link rel="stylesheet" href="resources/jquery.mobile-1.2.0.css" />
+	<link rel="stylesheet" href="resources/theme.css" />
+	<script src="resources/jquery.min.js"></script>
+	<script src="resources/jquery.mobile-1.2.0.min.js"></script>
+	<script src="resources/project.js"></script>
+</h:head>
 <body>
 	<div data-role="page" data-theme="a" id="login">
 		<div id="header" data-theme="a" data-role="header">
@@ -35,28 +35,30 @@
 							value="#{loginController.password}" />
 					</fieldset>
 				</div>
-				<div data-role="collapsible">
-					<h3>Eigenen Raum erstellen</h3>
-					<h:outputLabel for="customChatCheckbox">Raum mit diesem Namen erstellen </h:outputLabel>
-					<h:selectBooleanCheckbox id="customChatCheckbox"
-						value="#{loginController.customRoom}">
-						<f:ajax execute="customChatCheckbox" render="roomName"
-							event="change" />
-					</h:selectBooleanCheckbox>
-					<fieldset data-role="controlgroup">
-						<h:outputLabel for="roomName"> Raum Name: </h:outputLabel>
-						<h:inputText id="roomName" placeholder=""
-							value="#{loginController.customRoomName}" />
-					</fieldset>
+				<div data-role="fieldcontain">
+					<h3>Raum erstellen oder auswählen</h3>
+					<div data-role="fieldcontain">
+						<fieldset data-role="controlgroup">
+							<h:outputLabel for="roomName"> Raum Name: </h:outputLabel>
+							<h:inputText id="roomName" placeholder=""
+								value="#{loginController.customRoomName}" />
+						</fieldset>
+					</div>
+					<div>
+						<h:selectOneMenu id="availableRooms"
+							value="#{loginController.selectedRoom}">
+							<f:selectItems id="roomList"
+								value="#{loginController.availableRooms}" var="room"
+								itemValue="#{room}" itemLabel="#{room.name}" />
+						</h:selectOneMenu>
+					</div>
 				</div>
 
 				<div>
-					<a id="register" href="#registration" data-transition="fade">
-						Hier neuen Account erstellen </a>
+					<h:outputLink value="registration.xhtml">Hier neuen Account erstellen</h:outputLink>
 				</div>
 				<h:commandButton value="Raum beitreten"
-					action="#{loginController.enter}" id="enter"
-					data-theme="a" />
+					action="#{loginController.enter}" id="enter" data-theme="a" />
 			</h:form>
 		</div>
 	</div>

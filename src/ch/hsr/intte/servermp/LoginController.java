@@ -26,7 +26,6 @@ public class LoginController implements Serializable {
 	private Room selectedRoom;
 
 	private String customRoomName = "";
-	private boolean customRoom = false;
 
 	public void setUsername(String username) {
 		this.username = username;
@@ -42,14 +41,6 @@ public class LoginController implements Serializable {
 
 	public String getPassword() {
 		return password;
-	}
-
-	public boolean getCustomRoom() {
-		return customRoom;
-	}
-
-	public void setCustomRoom(boolean customRoom) {
-		this.customRoom = customRoom;
 	}
 
 	public int getRoomCount() {
@@ -87,7 +78,7 @@ public class LoginController implements Serializable {
 	}
 
 	private boolean roomIsAvailable() {
-		if (customRoom) {
+		if (!customRoomName.isEmpty()) {
 			selectedRoom = createCustomRoom();
 		}
 		return selectedRoom != null;
