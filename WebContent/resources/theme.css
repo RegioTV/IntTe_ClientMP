@@ -908,11 +908,11 @@ a.ui-link-inherit {
 }
 
 /* custom styles */
-.ui-field-contain .ui-controlgroup-controls {
-	width: 100%;
-}
-
-.ui-field-contain input.ui-input-text, .ui-field-contain textarea.ui-input-text, .ui-field-contain .ui-input-search {
+.ui-field-contain .ui-controlgroup-controls,
+.ui-field-contain input.ui-input-text,
+.ui-field-contain textarea.ui-input-text,
+.ui-field-contain .ui-input-search,
+.ui-field-contain .ui-select {
 	width: 100%;
 }
 
